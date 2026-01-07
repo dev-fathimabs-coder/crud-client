@@ -3,7 +3,7 @@ import './App.css'
 
 function App() {
 
-  let [username, setUserNAme] = useState("");
+  let [username, setUserName] = useState("");
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
 
@@ -13,15 +13,18 @@ function App() {
     e.preventDefault();
 
     let data = { username, email, password }
-    console.log(data);
-    
+
+
 
     fetch("http://localhost:5000/users", {
       method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(data)
 
     }).then(res => {
-      res.json()
+      return res.json()
     })
       .then((result) => {
         console.log("Response from server:", result);
@@ -31,28 +34,28 @@ function App() {
       })
   }
 
-return (
-  <>
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>UserName</label>
-        <input type="text"
-          value={username}
-          onChange={(e) => { setUserNAme(e.target.value) }} />
-        <label>Email</label>
-        <input type="email"
-          value={email}
-          onChange={(e) => { setEmail(e.target.value) }} />
-        <label>Password</label>
-        <input type="password"
-          value={password}
-          onChange={(e) => { setPassword(e.target.value) }} />
+  return (
+    <>
+      <div className='signup-form'>
+        <form onSubmit={handleSubmit}>
+          <label for='username'>UserName</label>
+          <input type="text" id='username' name='username'
+            value={username}
+            onChange={(e) => { setUserName(e.target.value) }} />
+          <label for="email">Email</label>
+          <input type="email" id='email' name='email'
+            value={email}
+            onChange={(e) => { setEmail(e.target.value) }} />
+          <label for='password'>Password</label>
+          <input type="password" id='password' name='password'
+            value={password}
+            onChange={(e) => { setPassword(e.target.value) }} />
 
-        <button>Sign Up</button>
-      </form>
-    </div>
-  </>
-)
+          <button className='signup'>Sign Up</button>
+        </form>
+      </div>
+    </>
+  )
 }
 
 export default App;
