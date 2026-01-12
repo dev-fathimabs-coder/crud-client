@@ -1,18 +1,30 @@
-import { useState } from 'react'
-import './App.css'
+// import { useState } from 'react'
+// import './App.css'
+
+import { useState } from "react";
 
 function App() {
 
-  let [username, setUserName] = useState("");
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
+  let [data, setData] = useState({
+    username: "",
+    email: "",
+    password: ""
+  })
+  let { username, email, password } = data;
+
+  function getValue(e) {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value
+    })
+  }
+  console.log(data);
 
   //PREVENT PAGE REFRESH
 
   let handleSubmit = async (e) => {
     e.preventDefault();
 
-    let data = { username, email, password }
 
 
 
@@ -38,18 +50,15 @@ function App() {
     <>
       <div className='signup-form'>
         <form onSubmit={handleSubmit}>
-          <label for='username'>UserName</label>
+          <label htmlFor='username'>UserName</label>
           <input type="text" id='username' name='username'
-            value={username}
-            onChange={(e) => { setUserName(e.target.value) }} />
-          <label for="email">Email</label>
+            value={username} onChange={getValue} />
+          <label htmlFor="email">Email</label>
           <input type="email" id='email' name='email'
-            value={email}
-            onChange={(e) => { setEmail(e.target.value) }} />
-          <label for='password'>Password</label>
+            value={email} onChange={getValue} />
+          <label htmlFor='password'>Password</label>
           <input type="password" id='password' name='password'
-            value={password}
-            onChange={(e) => { setPassword(e.target.value) }} />
+            value={password} onChange={getValue} />
 
           <button className='signup'>Sign Up</button>
         </form>
@@ -59,3 +68,6 @@ function App() {
 }
 
 export default App;
+
+
+
